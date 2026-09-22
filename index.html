@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fresh Face — Stock Manager</title>
+  <meta name="description" content="Private stock and ordering dashboard">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <p class="eyebrow">BUSINESS STOCK MANAGER</p>
+    <h1 id="businessName">Fresh Face</h1>
+  </div>
+  <button class="cart-button" id="cartButton" aria-label="Open order basket">
+    <span>Order basket</span><strong id="cartCount">0</strong>
+  </button>
+</header>
+
+<main>
+  <section class="dashboard">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">INVENTORY</p>
+        <h2>Stock at a glance</h2>
+        <p class="muted">Update products and stock statuses in <code>products.json</code>. The website updates automatically when the file is refreshed.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="controls">
+      <label class="search">
+        <span>Search</span>
+        <input id="search" type="search" placeholder="Search products…" autocomplete="off">
+      </label>
+      <label>
+        <span>Range</span>
+        <select id="rangeFilter"><option value="all">All ranges</option></select>
+      </label>
+      <label>
+        <span>Status</span>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="in_stock">In stock</option>
+          <option value="running_low">Running low</option>
+          <option value="out_of_stock">Out of stock</option>
+        </select>
+      </label>
+      <label class="check-control">
+        <input id="specialFilter" type="checkbox">
+        <span>Special order only</span>
+      </label>
+    </div>
+
+    <div class="attention" id="attention"></div>
+    <section class="product-grid" id="productGrid" aria-live="polite"></section>
+    <p class="empty" id="emptyState" hidden>No products match your filters.</p>
+  </section>
+</main>
+
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div>
+      <p class="eyebrow">ORDER BASKET</p>
+      <h2>Items to order</h2>
+    </div>
+    <button class="icon-button" id="closeCart" aria-label="Close basket">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="total-row"><span>Total</span><strong id="cartTotal">£0.00</strong></div>
+    <div class="order-actions">
+      <button class="secondary" id="copyOrder">Copy order text</button>
+      <button class="primary" id="downloadOrder">Download order</button>
+    </div>
+    <button class="text-button" id="clearCart">Clear basket</button>
+    <p class="tiny">The basket does not place an order online. It creates text you can paste into your supplier email.</p>
+  </div>
+</aside>
+<div class="overlay" id="overlay"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
