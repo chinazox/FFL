@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5b4636">
+  <title>Stock Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">FF</div>
+      <div>
+        <h1 id="businessName">Stock Manager</h1>
+        <p>Products &amp; stock control</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-button" id="openGuideBtn" type="button">How to edit</button>
+      <button class="cart-button" id="openCartBtn" type="button">
+        <span>Basket</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">STOCK CONTROL</p>
+        <h2>Keep your products organised.</h2>
+        <p class="hero-copy">See what you have, what needs ordering, and build your supplier order without doing the maths yourself.</p>
+      </div>
+      <div class="mode-switch" role="group" aria-label="Pricing and stock mode">
+        <button class="mode active" data-mode="retail" type="button">Retail</button>
+        <button class="mode" data-mode="professional" type="button">Professional</button>
+      </div>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="toolbar">
+      <div class="search-wrap">
+        <label for="search">Search products</label>
+        <input id="search" type="search" placeholder="e.g. ampoule, cleanser, mask…" autocomplete="off">
+      </div>
+      <div>
+        <label for="rangeFilter">Range</label>
+        <select id="rangeFilter"><option value="">All ranges</option></select>
+      </div>
+      <div>
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="In Stock">In Stock</option>
+          <option value="Running Low">Running Low</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+      </div>
+      <label class="checkbox-filter">
+        <input id="needsOrderOnly" type="checkbox">
+        <span>Needs ordering</span>
+      </label>
+    </section>
+
+    <section class="notice" id="dataNotice" hidden></section>
+
+    <section class="products-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PRODUCTS</p>
+          <h3 id="resultsHeading">All products</h3>
+        </div>
+        <span class="result-count" id="resultCount"></span>
+      </div>
+      <div class="product-table-wrap">
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Range</th>
+              <th>Pack size</th>
+              <th>Stock</th>
+              <th>Price</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="productRows"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="emptyState" hidden>
+        <div class="empty-icon">⌕</div>
+        <h3>No products found</h3>
+        <p>Try changing your search or filters.</p>
+      </div>
+    </section>
+  </main>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <p class="eyebrow">ORDER BASKET</p>
+        <h2>Your order</h2>
+      </div>
+      <button class="close-button" id="closeCartBtn" type="button" aria-label="Close basket">×</button>
+    </div>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-footer" id="cartFooter"></div>
+  </aside>
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+
+  <dialog class="modal" id="checkoutModal">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">CHECKOUT</p>
+          <h2>Supplier order</h2>
+        </div>
+        <button class="close-button" id="closeCheckoutBtn" type="button">×</button>
+      </div>
+      <p class="modal-copy">Copy this into an email, or download it as a text file.</p>
+      <textarea id="orderText" readonly></textarea>
+      <div class="modal-actions">
+        <button class="secondary-button" id="copyOrderBtn" type="button">Copy order text</button>
+        <button class="primary-button" id="downloadOrderBtn" type="button">Download .txt</button>
+      </div>
+      <p class="copy-feedback" id="copyFeedback" aria-live="polite"></p>
+    </div>
+  </dialog>
+
+  <dialog class="modal guide-modal" id="guideModal">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">QUICK GUIDE</p>
+          <h2>Editing your stock list</h2>
+        </div>
+        <button class="close-button" id="closeGuideBtn" type="button">×</button>
+      </div>
+      <div class="guide-content">
+        <p><strong>You only need to edit one file:</strong> <code>data/products.json</code>.</p>
+        <ol>
+          <li>Open <code>data/products.json</code> in GitHub/Codespaces.</li>
+          <li>Edit a product, add a product, or change a range/status/price.</li>
+          <li>Save the file and refresh the website.</li>
+        </ol>
+        <h3>Changing a category/range</h3>
+        <p>Find the product and change the <code>ranges</code> list. You can have one range or several:</p>
+        <pre>{
+  "name": "Example Product",
+  "ranges": ["Essential Range", "Masks"]
+}</pre>
+        <h3>Changing stock</h3>
+        <pre>"professional": {
+  "size": "125ml",
+  "price": 42,
+  "quantity": 3,
+  "status": "In Stock",
+  "specialOrder": false
+}</pre>
+        <p>For stock status use exactly <code>In Stock</code>, <code>Running Low</code>, or <code>Out of Stock</code>.</p>
+        <h3>Special order</h3>
+        <p>Set <code>specialOrder</code> to <code>true</code> when you do not need to keep the item on hand. A special-order item with zero stock will not be counted as a stock-out in the dashboard's ordering alert.</p>
+        <h3>Adding a product</h3>
+        <p>Copy an existing product object, give it a unique <code>id</code>, change the details, and paste it into the <code>products</code> array. If a product has no price in a mode, leave <code>price</code> as <code>null</code> and it cannot be added to the basket in that mode.</p>
+        <h3>Product images</h3>
+        <p>Optional. Put an image inside <code>assets/images/</code> and set the product's <code>image</code> to something like <code>assets/images/super-soft-cleanser.jpg</code>.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
