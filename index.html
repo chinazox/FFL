@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fresh Face Lagos · Stock Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">FF</div>
+      <div><div class="eyebrow">FRESH FACE</div><h1>Stock Manager</h1></div>
+    </div>
+    <button id="cartButton" class="cart-button">Order basket <span id="cartCount">0</span></button>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">INVENTORY CONTROL</p>
+        <h2>Your products, ranges &amp; orders in one place.</h2>
+        <p class="muted">Edit <code>products.json</code> whenever your stock, prices or ranges change. The website updates automatically when you reload it.</p>
+      </div>
+      <div class="hero-note"><strong>Ordering workflow</strong><span>Add products → review basket → generate order email</span></div>
+    </section>
+
+    <section id="stats" class="stats"></section>
+
+    <section class="toolbar">
+      <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search products…" /></label>
+      <div id="rangeFilters" class="filters"></div>
+      <select id="statusFilter" aria-label="Filter by status">
+        <option value="All">All statuses</option>
+        <option value="In stock">In stock</option>
+        <option value="Running low">Running low</option>
+        <option value="Out of stock">Out of stock</option>
+        <option value="Special order">Special order</option>
+      </select>
+    </section>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>Range</th><th>Size / pack</th><th>Price</th><th>Status</th><th></th></tr></thead>
+        <tbody id="productTable"></tbody>
+      </table>
+      <div id="emptyState" class="empty" hidden>No products match your filters.</div>
+    </div>
+  </main>
+
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-head"><div><p class="eyebrow">ORDER BASKET</p><h2>Products to order</h2></div><button id="closeDrawer" class="icon-btn">×</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="drawer-foot">
+      <div class="total-row"><span>Total</span><strong id="cartTotal">£0.00</strong></div>
+      <button id="checkout" class="primary">Generate order</button>
+      <button id="clearCart" class="secondary">Clear basket</button>
+      <p class="tiny">Products without a price can still be added; they will appear in the generated order without a line total.</p>
+    </div>
+  </aside>
+  <div id="overlay" class="overlay" hidden></div>
+
+  <dialog id="productDialog">
+    <button class="dialog-close icon-btn" id="closeDialog">×</button>
+    <div id="dialogContent"></div>
+  </dialog>
+
+  <dialog id="orderDialog">
+    <button class="dialog-close icon-btn" id="closeOrder">×</button>
+    <p class="eyebrow">ORDER REQUEST</p><h2>Your order is ready</h2>
+    <p class="muted">Copy this into an email, or download it as a text file.</p>
+    <textarea id="orderText" readonly></textarea>
+    <div class="dialog-actions"><button id="copyOrder" class="primary">Copy order text</button><button id="downloadOrder" class="secondary">Download .txt</button></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
