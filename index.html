@@ -9,8 +9,8 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="brand-mark">FF</div>
-      <div><div class="eyebrow">FRESH FACE</div><h1>Stock Manager</h1></div>
+      <div class="brand-mark">TKC</div>
+      <div><div class="eyebrow">THE K CLINIC</div><h1>Stock Manager</h1></div>
     </div>
     <button id="cartButton" class="cart-button">Order basket <span id="cartCount">0</span></button>
   </header>
@@ -19,8 +19,8 @@
     <section class="hero">
       <div>
         <p class="eyebrow">INVENTORY CONTROL</p>
-        <h2>Your products, ranges &amp; orders in one place.</h2>
-        <p class="muted">Edit <code>products.json</code> whenever your stock, prices or ranges change. The website updates automatically when you reload it.</p>
+        <h2>Products, ranges &amp; order generator.</h2>
+        <p class="muted">Edit <code>products.json</code> whenever your stock, prices or ranges change.</p>
       </div>
       <div class="hero-note"><strong>Ordering workflow</strong><span>Add products → review basket → generate order email</span></div>
     </section>
@@ -29,14 +29,16 @@
 
     <section class="toolbar">
       <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search products…" /></label>
-      <div id="rangeFilters" class="filters"></div>
-      <select id="statusFilter" aria-label="Filter by status">
-        <option value="All">All statuses</option>
-        <option value="In stock">In stock</option>
-        <option value="Running low">Running low</option>
-        <option value="Out of stock">Out of stock</option>
-        <option value="Special order">Special order</option>
-      </select>
+      <div id="statusFilters" class="filters">
+  <button class="filter active" data-status="All">All</button>
+  <button class="filter" data-status="In stock">In Stock</button>
+  <button class="filter" data-status="Running low">Running Low</button>
+  <button class="filter" data-status="Out of stock">Out of Stock</button>
+</div>
+
+<select id="rangeFilter" aria-label="Filter by range">
+  <option value="All">All ranges</option>
+</select>
     </section>
 
     <div class="table-wrap">
@@ -52,7 +54,24 @@
     <div class="drawer-head"><div><p class="eyebrow">ORDER BASKET</p><h2>Products to order</h2></div><button id="closeDrawer" class="icon-btn">×</button></div>
     <div id="cartItems" class="cart-items"></div>
     <div class="drawer-foot">
-      <div class="total-row"><span>Total</span><strong id="cartTotal">£0.00</strong></div>
+      <div class="cart-summary">
+
+  <div class="summary-row">
+    <span>Subtotal</span>
+    <strong id="cartSubtotal">£0.00</strong>
+  </div>
+
+  <div class="summary-row">
+    <span>VAT (20%)</span>
+    <strong id="cartVat">£0.00</strong>
+  </div>
+
+  <div class="summary-total">
+    <span>Total</span>
+    <strong id="cartTotal">£0.00</strong>
+  </div>
+
+</div>
       <button id="checkout" class="primary">Generate order</button>
       <button id="clearCart" class="secondary">Clear basket</button>
       <p class="tiny">Products without a price can still be added; they will appear in the generated order without a line total.</p>
